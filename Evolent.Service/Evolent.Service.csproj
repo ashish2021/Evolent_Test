@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Evolent.Data\Evolent.Data.csproj" />
+    <ProjectReference Include="..\Evolent.Model\Evolent.Model.csproj" />
+  </ItemGroup>
+
+</Project>

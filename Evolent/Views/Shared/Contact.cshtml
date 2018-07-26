@@ -1,0 +1,17 @@
+﻿@model Evolent.Web.ViewModels.ContactViewModel
+<div class="panel-body">
+
+    <table class="table">
+        <tr>
+            <td style="width:10%"> @Model.FirstName</td>
+            <td style="width:10%">@Model.LastName</td>
+            <td style="width:20%"> @Model.Email</td>
+            <td style="width:20%"> @Model.MobileNumber</td>
+            <td style="width:25%">
+                @Html.ActionLink("Edit", "Edit", new { id = @Model.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = @Model.Id }, new { onclick = "return confirm('Are you sure you wish to delete this contact?');" })
+            </td>
+        </tr>
+    </table>
+</div>
+

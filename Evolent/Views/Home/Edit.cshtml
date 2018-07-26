@@ -1,0 +1,95 @@
+﻿@model Evolent.Web.ViewModels.ContactViewModel
+@{
+    ViewBag.Title = "Filter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+
+    <div class="form-horizontal">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken() // this is for prevent CSRF attack
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            if (@ViewBag.Message != null)
+            {
+                <div id="popupdiv" style="border: 1px solid red; display: none;">
+                    @ViewBag.Message
+                </div>
+            }
+            <fieldset style="margin-top:100px;">
+                <legend>Edit Contact</legend>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", required = "required", @placeholder = "first name required" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "email", @placeholder = "example@test.com" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MobileNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control", required = "required", @placeholder = "10 digit mob num req" } })
+                        @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="editor-label" style="display:none">
+                    @Html.EditorFor(model => model.Id)
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10" style="float:right">
+                        <input type="button" id="submit" value="Update" onclick="SaveContact()" />
+                        @Html.ActionLink("Back", "Index")
+                    </div>
+                </div>
+            </fieldset>
+        }
+
+    </div>
+
+    <div>
+
+    </div>
+    <script type="text/javascript">
+
+        function SaveContact() {
+            var cFname = $("#FirstName").val();
+            var cLname = $("#LastName").val();
+            var cEmail = $("#Email").val();
+            var cMobNumber = $("#MobileNumber").val();
+            var cid = $("#Id").val();
+
+            var contactFormViewModel = {
+                "showFirstName": cFname, "showLastName": cLname,
+                "showEmail": cEmail, "showMobileNumber": cMobNumber,
+                "showId": cid
+            };
+
+            $.post('/home/Edit', contactFormViewModel,
+
+                function (data, status) {
+                    if (status == "success")
+                        alert("Operation: " + "\n Status : " + status)
+                }, 'json');
+        }
+
+
+    </script>
+</div>
+
